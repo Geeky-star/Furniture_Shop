@@ -2,14 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_app/products/shopping_cart_screen.dart';
-import 'package:furniture_app/widgets/text.dart';
 
 class ProjectDetails extends StatefulWidget {
   final String productImage;
   final int price;
   final String name;
+  final String productId;
 
-  ProjectDetails({@required this.productImage, this.price, this.name});
+  ProjectDetails(
+      {@required this.productImage, this.price, this.name, this.productId});
   @override
   _ProjectDetailsState createState() => _ProjectDetailsState();
 }
@@ -146,12 +147,14 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   "Add to Cart",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  await _addToCart();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => CartScreen(),
                       ));
+                  //  Scaffold.of(context).showSnackBar(_snackBar);
                 },
               ),
             ],
