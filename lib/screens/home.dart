@@ -8,25 +8,20 @@ import 'package:furniture_app/screens/profile_screen.dart';
 import 'package:furniture_app/widgets/text.dart';
 
 class HomePage extends StatefulWidget {
-  final int selected;
-   final Function(int) tabPressed;
+  final int selectedTab;
+  final Function(int) tabPressed;
 
-  HomePage({this.selected,this.tabPressed});
+  HomePage({this.selectedTab, this.tabPressed});
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedTab = 0;
-  
   final CollectionReference _productsRef =
       FirebaseFirestore.instance.collection("Chairs");
 
-  bool isFocussed = false;
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
-    _selectedTab = widget.selected ?? 0;
     return Scaffold(
       appBar: AppBar(
         bottomOpacity: 0,
@@ -77,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CartScreen(),
+                        builder: (context) => CartPage(),
                       ));
                 },
                 child: Text(
@@ -128,20 +123,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.search),
-                )
-              ],
-            ),
             SizedBox(
-              height: 36,
+              height: 34,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -170,26 +153,6 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 50,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  child: !isFocussed
-                      ? Text(
-                          "Chairs",
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Text("Chairs", style: TextStyle(color: Colors.black)),
-                  onTap: () {
-                    isFocussed = true;
-                    widget.selected = _selectedTab == 0 ? true : false;
-                  },
-                ),
-                GestureDetector(child: Text("Tables")),
-                GestureDetector(child: Text("Lamps")),
-                GestureDetector(child: Text("All"))
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: StreamBuilder(
@@ -211,16 +174,14 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProjectDetails(
-                                        productImage: snapshot
-                                            .data.documents[index]["image"],
-                                        price: snapshot.data.documents[index]
-                                            ["price"],
-                                        name: snapshot.data.documents[index]
-                                            ["name"]),
+                                      productImage: snapshot
+                                          .data.documents[index]["image"],
+                                      price: snapshot.data.documents[index]
+                                          ["price"],
+                                      name: snapshot.data.documents[index]
+                                          ["name"],
+                                    ),
                                   ));
-                              print(_productsRef
-                                  .doc(_productsRef.doc().id)
-                                  .get());
                             },
                             child: Card(
                               color: Colors.white,
@@ -265,12 +226,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  Widget _drawer(BuildContext context) {
-    return Drawer(
-        child: ListView(
-      children: [Text("welcome")],
-    ));
   }
 }

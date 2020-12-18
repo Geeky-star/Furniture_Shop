@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:furniture_app/screens/profile_screen.dart';
 
 Future<bool> register(String email, String password) async {
   try {
@@ -31,5 +32,6 @@ Future<bool> signIn(String email, String password) async {
       print('Wrong password provided for that user.');
     }
   }
+
   return false;
 }

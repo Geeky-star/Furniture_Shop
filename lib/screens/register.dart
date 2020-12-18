@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
                   child: Image.asset("assets/login1.png")),
               Positioned(
                 top: 100,
-                left: 100,
+                left: 70,
                 child: Text("Register to Shop",
                     style:
                         TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
