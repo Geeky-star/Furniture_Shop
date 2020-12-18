@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CartScreen(),
+                        builder: (context) => CartPage(),
                       ));
                 },
                 child: Text(
@@ -182,9 +182,6 @@ class _HomePageState extends State<HomePage> {
                                           ["name"],
                                     ),
                                   ));
-                              print(_productsRef
-                                  .doc(_productsRef.doc().id)
-                                  .get());
                             },
                             child: Card(
                               color: Colors.white,
