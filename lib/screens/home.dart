@@ -17,9 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final CollectionReference _productsRef =
-      FirebaseFirestore.instance.collection("Chairs");
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                       ));
                 },
                 child: Text(
-                  "Orders",
+                  "Cart",
                   style: Textstyle.normalheading,
                 ),
               ),

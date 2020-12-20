@@ -65,6 +65,7 @@ class _LoginState extends State<Login> {
                   bool shouldNavigate =
                       await signIn(_email.text, _password.text);
                   if (shouldNavigate) {
+                    CircularProgressIndicator();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
