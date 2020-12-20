@@ -14,12 +14,27 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   final CollectionReference _usersRef =
       FirebaseFirestore.instance.collection("Users");
 
   User _user = FirebaseAuth.instance.currentUser;
 
-  
+  void _showScaffold(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
+
+  rejectJob(String jobId) {
+    return FirebaseFirestore.instance
+        .collection('Users')
+        .doc(_user.uid)
+        .collection("Wishlist")
+        .doc(jobId)
+        .delete();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +72,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   }
                 },
               ),
-             
             ],
           ),
         ),
@@ -91,7 +105,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   width: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 70),
+                  padding: const EdgeInsets.only(top: 60),
                   child: Column(
                     children: [
                       Padding(
@@ -105,12 +119,20 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         "Price : " + document['price'].toString(),
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          rejectJob(document.id);
+                          _showScaffold("Product Removed from Wishlist");
+                        },
+                        child: Text("Remove"),
+                      )
                     ],
                   ),
                 ),
               ]))
         ]);
   }
-    
-  }
-
+}

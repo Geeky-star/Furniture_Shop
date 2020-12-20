@@ -182,7 +182,6 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                           MaterialPageRoute(
                             builder: (context) => CartPage(),
                           ));
-                      //  Scaffold.of(context).showSnackBar(_snackBar);
                     },
                   ),
                 ],
@@ -191,36 +190,4 @@ class _ProjectDetailsState extends State<ProjectDetails> {
           ),
         ));
   }
-  /* final CollectionReference _productsRef =
-      FirebaseFirestore.instance.collection("Chairs");
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Product description"),
-      ),
-      body: FutureBuilder(
-          future: _productsRef.doc(widget.productId).get(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                  child: Text(
-                "error",
-                style: TextStyle(fontSize: 30),
-              ));
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> documentData = snapshot.data.data();
-              print(snapshot.data.data());
-              return Container(
-                child: Image.network(documentData["image"]),
-              );
-            }
-            return CircularProgressIndicator();
-          }),
-    );
-
-  }
-  */
 }
