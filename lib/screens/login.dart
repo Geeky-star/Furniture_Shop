@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_app/screens/auth.dart';
 import 'package:furniture_app/screens/home.dart';
@@ -9,14 +10,39 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
+class AnimatedTextExample {
+  final String label;
+  final Color color;
+  final Widget child;
+  const AnimatedTextExample({
+    @required this.label,
+    @required this.color,
+    @required this.child,
+  });
+}
+
 class _LoginState extends State<Login> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  bool loading = false;
+
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+
+  loadingIndicator() {
+    return CircularProgressIndicator();
+  }
+
+  void _showScaffold(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -26,19 +52,24 @@ class _LoginState extends State<Login> {
               height: 10,
             ),
             Positioned(
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-                child: Image.asset("assets/login.png")),
+                top: 40,
+                right: 10,
+                left: 10,
+                child: Image.asset(
+                  "assets/login.gif",
+                  height: 150,
+                )),
             Positioned(
-              top: 100,
-              left: 100,
-              child: Text("Login to Shop",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+              top: 210,
+              right: 10,
+              left: 150,
+              child: Text(
+                "Login To Shop",
+                style: Textstyle.normalheading,
+              ),
             ),
             Positioned(
-              top: 230,
+              top: 250,
               left: 15,
               right: 6,
               child: TextField(
@@ -48,7 +79,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             Positioned(
-              top: 300,
+              top: 320,
               left: 15,
               right: 6,
               child: TextField(
@@ -64,8 +95,8 @@ class _LoginState extends State<Login> {
                 onPressed: () async {
                   bool shouldNavigate =
                       await signIn(_email.text, _password.text);
+                  loading = true;
                   if (shouldNavigate) {
-                    CircularProgressIndicator();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -76,10 +107,12 @@ class _LoginState extends State<Login> {
                   }
                 },
                 color: Colors.black,
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: loading == true
+                    ? CircularProgressIndicator()
+                    : Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
               ),
             ),
             Positioned(
