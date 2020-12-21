@@ -36,6 +36,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
         children: [
           SizedBox(
+            height: 40,
+          ),
+          Image.asset("assets/user.gif",width: 200),
+          SizedBox(
             height: 50,
           ),
           Center(
